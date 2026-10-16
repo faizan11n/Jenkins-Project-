@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+                sh 'ls -la'
+            }
+        }
+        stage('Run Script') {
+            steps {
+                dir('project2-python-pipeline') {
+                    sh 'python3 hello.py'
+                }
+            }
+        }
+        stage('Archive Result') {
+            steps {
+                archiveArtifacts artifacts: 'project2-python-pipeline/result.txt', fingerprint: true
+            }
+        }
+    }
+}
