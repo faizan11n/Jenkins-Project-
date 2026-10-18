@@ -11,7 +11,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scm
-                echo "App: ${APP_NAME}"
+                echo "App name: ${APP_NAME}"
                 echo "Repo: ${REPO_URL}"
             }
         }
