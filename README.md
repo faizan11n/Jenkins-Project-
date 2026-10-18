@@ -47,3 +47,5 @@ docker exec -u root jenkins apt-get update && docker exec -u root jenkins apt-ge
 ## Notes
 - EC2 public IP changes after stop/start. An Elastic IP avoids breaking the webhook
 - Keep port 8099 restricted to your own IP when not testing webhooks
+
+More projects coming soon.
