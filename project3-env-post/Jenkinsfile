@@ -1,0 +1,47 @@
+pipeline {
+    agent any
+
+    environment {
+        REPO_URL    = 'https://github.com/faizan11n/Jenkins-Project-.git'
+        APP_NAME    = 'jenkins-practice'
+        SHOULD_FAIL = 'false'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+                echo "App: ${APP_NAME}"
+                echo "Repo: ${REPO_URL}"
+            }
+        }
+        stage('Run Script') {
+            steps {
+                sh 'python3 -c "print(\'Hello from project 3\')"'
+            }
+        }
+        stage('Failure Test') {
+            steps {
+                sh '''
+                    if [ "$SHOULD_FAIL" = "true" ]; then
+                        echo "Forcing a failure for the demo"
+                        exit 1
+                    fi
+                    echo "No failure forced"
+                '''
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "SUCCESS: ${APP_NAME} build #${BUILD_NUMBER} passed"
+        }
+        failure {
+            echo "FAILURE: ${APP_NAME} build #${BUILD_NUMBER} failed"
+        }
+        always {
+            echo "ALWAYS: pipeline finished (this message prints every time)"
+        }
+    }
+}
